@@ -3,6 +3,7 @@ package test;
 import java.util.ArrayList;
 
 public class H00isValidIP {
+	static int line=0;
 	/**给一个由数字组成的字符串。求出其可能恢复为的所有IP地址。
 样例
 给出字符串 "25525511135"，所有可能的IP地址为：
@@ -31,6 +32,7 @@ public class H00isValidIP {
 			if (isStartZero(subIP))  return;//子IP段：以0开始，直接返回，
 			if (!isLess255(subIP))  return;//子IP段：大于255，直接返回，
 			IP += "." + subIP;
+			System.out.println( (line++) +"行,"+"list.size()="+list.size()+" (IPsize == 3)----------- 加入IP="+IP);
 			if (!list.contains(IP))     list.add(IP);
 			return;
 		} else {
@@ -38,22 +40,23 @@ public class H00isValidIP {
 				int j = 1;
 				while (start + j < s.length() && j <= 4) {//内层循环while
 					String subIP = s.substring(start, start + j );//截取下标为start~（start+j-1）子串
+					System.out.println(  (line++) +"行,"+"while中划分 subIP="+subIP+",start="+start+",j="+j);
 					if (isStartZero(subIP))    break;//跳出while
 					if (!isLess255(subIP))   break;//跳出while
 					
-					if (IPsize == 0) {
+					if (IPsize == 0) {//一个subIP都没有，开始
 						IP += subIP;
 						IPsize++;
-						System.out.println(" (IPsize == 0) 进入dfs,IP="+IP+",(start + j)="+(start + j)+",IPsize="+IPsize);
+						System.out.println(  (line++) +"行,"+" (IPsize == 0) 进入dfs,IP="+IP+",(start + j)="+(start + j)+",IPsize="+IPsize);
 						dfs(list, IP, s, start + j, IPsize);
 						IP = "";//递归回来，IP已经加入list。
 					} else {
 						IP += "." + subIP;//IP=第0个元素.第1个元素。此时IP=2.5。所以下面的IPsize++。
 						IPsize++;
-						System.out.println(" (IPsize ==123) 进入dfs,IP="+IP+",(start + j)="+(start + j)+",IPsize="+IPsize);
+						System.out.println( (line++) +"行," +" (IPsize ==1或2或3) 进入dfs,IP="+IP+",(start + j)="+(start + j)+",IPsize="+IPsize);
 						dfs(list, IP, s, start + j, IPsize);//以下标为（start + j）开始的子串往下递归，即dfs。
 						IP = IP.substring(0, IP.length() - j - 1);//递归回来，再在IP中细分。
-						System.out.println("IP="+IP+",dfs回来(IP.length() - j - 1)="+(IP.length() - j - 1)+",j="+j);
+						System.out.println( (line++) +"行," +"IP="+IP+",dfs回来(IP.length() - j - 1)="+(IP.length() - j - 1)+",IP.length()="+IP.length()+",j="+j);
 					}// if   end
 
 					IPsize--;
