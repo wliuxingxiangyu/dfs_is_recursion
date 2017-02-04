@@ -7,7 +7,7 @@ public class H00isValidIP {
   "255.255.11.135",
   "255.255.111.35"
 ]
-（顺序无关紧要）解题：深度优先遍历
+（顺序无关紧要）解题：深度优先遍历=循环中递归，1.递归实参的改变，2.递归结束条件。
 	 * @return All possible valid IP addresses 不能包括01 001这样的格式
 	 */
 	static int line=0;
@@ -21,7 +21,7 @@ public class H00isValidIP {
         if (subIPsize > 4) {
             return;
         }
-        if (subIPsize == 3 && isValid(s)) {
+        if (subIPsize == 3 && isValid(s)) {//前面已经有3部分,如果这个满足即4个subIP成为有效IP,可以返回.
             res.add(prePart + s);//前面部分（包括中间部分）+后面部分
             return;
         }
